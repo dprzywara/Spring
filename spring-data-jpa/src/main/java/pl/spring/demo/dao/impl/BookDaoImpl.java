@@ -1,5 +1,6 @@
 package pl.spring.demo.dao.impl;
-
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
@@ -10,10 +11,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class BookDaoImpl implements BookDao {
 
     private final Set<BookTo> ALL_BOOKS = new HashSet<>();
-
+    @Autowired
     private Sequence sequence;
 
     public BookDaoImpl() {
@@ -35,16 +37,16 @@ public class BookDaoImpl implements BookDao {
         return null;
     }
 
+    public long getNextSequenceValue(){
+    	return sequence.nextValue(ALL_BOOKS);
+    }
     @Override
     @NullableId
     public BookTo save(BookTo book) {
-        if (book.getId() == null) {
-            book.setId(sequence.nextValue(ALL_BOOKS));
-        }
         ALL_BOOKS.add(book);
         return book;
     }
-
+    
     public void setSequence(Sequence sequence) {
         this.sequence = sequence;
     }

@@ -1,13 +1,17 @@
 package pl.spring.demo.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
 
+@Service
 public class BookServiceImpl implements BookService {
 
+	@Autowired
     private BookDao bookDao;
 
     @Override
@@ -29,7 +33,8 @@ public class BookServiceImpl implements BookService {
     public BookTo saveBook(BookTo book) {
         return bookDao.save(book);
     }
-
+    
+   
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
     }
