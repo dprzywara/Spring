@@ -8,6 +8,8 @@ package pl.spring.demo.mock;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
+
+import pl.spring.demo.common.BookMapper;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.service.impl.BookServiceImpl;
 import pl.spring.demo.to.BookTo;
@@ -25,7 +27,9 @@ public class BookServiceImplTest {
     private BookServiceImpl bookService;
     @Mock
     private BookDao bookDao;
-
+    @Mock
+    private BookMapper mapper;
+    
     @Before
     public void setUpt() {
         MockitoAnnotations.initMocks(this);
@@ -35,11 +39,11 @@ public class BookServiceImplTest {
     public void testShouldSaveBook() {
         // given
         BookTo book = new BookTo(null, "title", "author");
-        Mockito.when(bookDao.save(book)).thenReturn(new BookTo(1L, "title", "author"));
+        Mockito.when(bookDao.save(mapper.mapToBookEntity(book))).thenReturn(mapper.mapToBookEntity(new BookTo(1L, "title", "author")));
         // when
         BookTo result = bookService.saveBook(book);
         // then
-        Mockito.verify(bookDao).save(book);
+        Mockito.verify(bookDao).save(mapper.mapToBookEntity(book));
         assertEquals(1L, result.getId().longValue());
     }
 }

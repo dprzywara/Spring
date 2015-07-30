@@ -5,12 +5,12 @@ import java.util.List;
 public class BookEntity implements IdAware {
 	private Long id;
 	private String title;
-	private List<AthorTo> authors;
+	private List<AuthorTo> authors;
 	
 	
 	public BookEntity() {
     }
-	public BookEntity(Long id, String title, List<AthorTo> authors) {
+	public BookEntity(Long id, String title, List<AuthorTo> authors) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -30,11 +30,11 @@ public class BookEntity implements IdAware {
 		this.title = title;
 	}
 
-	public List<AthorTo> getAuthors() {
+	public List<AuthorTo> getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(List<AthorTo> authors) {
+	public void setAuthors(List<AuthorTo> authors) {
 		this.authors = authors;
 	}
 

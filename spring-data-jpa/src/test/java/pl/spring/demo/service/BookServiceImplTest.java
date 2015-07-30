@@ -22,8 +22,10 @@ public class BookServiceImplTest {
 
     @Test
     public void testShouldFindAllBooks() {
+    	 
         // when
         List<BookTo> allBooks = bookService.findAllBooks();
+       
         // then
         assertNotNull(allBooks);
         assertFalse(allBooks.isEmpty());
