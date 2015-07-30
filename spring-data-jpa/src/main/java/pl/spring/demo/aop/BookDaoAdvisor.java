@@ -22,7 +22,7 @@ public class BookDaoAdvisor implements MethodBeforeAdvice {
         }
         setNotNullId(o,objects);
     }
-
+       
     private void checkNotNullId(Object o) {
         if (o instanceof IdAware && ((IdAware) o).getId() != null) {
             throw new BookNotNullIdException();

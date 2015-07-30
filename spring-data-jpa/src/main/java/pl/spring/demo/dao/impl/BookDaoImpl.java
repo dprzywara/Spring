@@ -10,6 +10,7 @@ import pl.spring.demo.to.BookEntity;
 import pl.spring.demo.to.BookTo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,13 +73,13 @@ public class BookDaoImpl implements BookDao {
     public void setSequence(Sequence sequence) {
         this.sequence = sequence;
     }
-
+ 
     private void addTestBooks() {
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(1L, "Romeo i Julia", "Wiliam Szekspir;")));
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(2L, "Opium w rosole", "Hanna Ożogowska;")));
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(3L, "Przygody Odyseusza", "Jan Parandowski;")));
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(4L, "Awantura w Niekłaju", "Edmund Niziurski;")));
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(5L, "Pan Samochodzik i Fantomas", "Zbigniew Nienacki;")));
-        ALL_BOOKS.add(mapper.mapToBookEntity(new BookTo(6L, "Zemsta", "Aleksander Fredro;")));
+        ALL_BOOKS.add(new BookEntity(1L, "Romeo i Julia",Arrays.asList(new AuthorTo( "Wiliam Szekspir;"))));
+        ALL_BOOKS.add(new BookEntity(2L, "Opium w rosole", Arrays.asList(new AuthorTo("Hanna Ożogowska;"))));
+        ALL_BOOKS.add(new BookEntity(3L, "Przygody Odyseusza",Arrays.asList(new AuthorTo( "Jan Parandowski;"))));
+        ALL_BOOKS.add(new BookEntity(4L, "Awantura w Niekłaju",Arrays.asList(new AuthorTo( "Edmund Niziurski;"))));
+        ALL_BOOKS.add(new BookEntity(5L, "Pan Samochodzik i Fantomas",Arrays.asList(new AuthorTo( "Zbigniew Nienacki;"))));
+        ALL_BOOKS.add(new BookEntity(6L, "Zemsta",Arrays.asList(new AuthorTo( "Aleksander Fredro;"))));
     }
 }

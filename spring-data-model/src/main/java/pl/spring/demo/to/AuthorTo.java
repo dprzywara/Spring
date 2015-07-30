@@ -13,11 +13,16 @@ public class AuthorTo {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-
+ 
 	public AuthorTo(String authorData) {
+		if(authorData!=null){
 		String[] author = authorData.split(" ");
-		this.firstName = author[1];
-		this.lastName = author[2];
+		if(author.length==0){
+		this.lastName=authorData;}
+		
+		this.firstName = author[0];
+		this.lastName = author[1];
+		}
 
 	}
 

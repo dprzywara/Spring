@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.spring.demo.common.BookMapper;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.service.BookService;
+import pl.spring.demo.to.BookEntity;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
@@ -35,9 +36,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookTo saveBook(BookTo book) {
-        return mapper.mapToBookTo(bookDao.save(mapper.mapToBookEntity(book)));
+    	BookEntity entttt = mapper.mapToBookEntity(book);
+    	System.out.println(entttt.getTitle());
+    	BookEntity enttttSave =bookDao.save(entttt);
+    	System.out.println(enttttSave.getTitle());
+        return mapper.mapToBookTo(enttttSave);
     }
-    
+     
    
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
