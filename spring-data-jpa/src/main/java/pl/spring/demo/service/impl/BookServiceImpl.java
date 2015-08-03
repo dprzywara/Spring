@@ -15,36 +15,31 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-    private BookDao bookDao;
+	private BookDao bookDao;
 	@Autowired
 	private BookMapper mapper;
-	
-    @Override
-    public List<BookTo> findAllBooks() {
-        return mapper.mapToBookToList(bookDao.findAll());
-    }
 
-    @Override
-    public List<BookTo> findBooksByTitle(String title) {
-        return mapper.mapToBookToList(bookDao.findBookByTitle(title));
-    }
+	@Override
+	public List<BookTo> findAllBooks() {
+		return mapper.mapToBookToList(bookDao.findAll());
+	}
 
-    @Override
-    public List<BookTo> findBooksByAuthor(String author) {
-        return mapper.mapToBookToList(bookDao.findBooksByAuthor(author));
-    }
+	@Override
+	public List<BookTo> findBooksByTitle(String title) {
+		return mapper.mapToBookToList(bookDao.findBookByTitle(title));
+	}
 
-    @Override
-    public BookTo saveBook(BookTo book) {
-    	BookEntity entttt = mapper.mapToBookEntity(book);
-    	System.out.println(entttt.getTitle());
-    	BookEntity enttttSave =bookDao.save(entttt);
-    	System.out.println(enttttSave.getTitle());
-        return mapper.mapToBookTo(enttttSave);
-    }
-     
-   
-    public void setBookDao(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }
+	@Override
+	public List<BookTo> findBooksByAuthor(String author) {
+		return mapper.mapToBookToList(bookDao.findBooksByAuthor(author));
+	}
+
+	@Override
+	public BookTo saveBook(BookTo book) {
+		return mapper.mapToBookTo(bookDao.save(mapper.mapToBookEntity(book)));
+	}
+
+	public void setBookDao(BookDao bookDao) {
+		this.bookDao = bookDao;
+	}
 }
