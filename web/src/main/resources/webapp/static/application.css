@@ -1,3 +1,21 @@
 .sample {
     color: red;
 }
+table, td, th {
+    border: 2px solid blue;
+}
+
+td{
+    background-color: yellow;
+    color: black;
+    text-align: left;
+    padding: 12px;
+    font-weight:bold; 
+}
+
+th {
+	background-color: orange;
+    text-align: center;
+   font-weight:bold; 
+   font-size: 150%;
+}

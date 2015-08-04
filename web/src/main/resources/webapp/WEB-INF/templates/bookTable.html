@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8" />
+<title>Tabela z książkami</title>
+<link rel="stylesheet" th:href="@{/static/application.css}"
+	href="/static/application.css" />
+</head>
+<body>
+	<!-- 	<table >border="1" style="width: 300px"> -->
+	<!-- <form th:action="@{/bookTable/del/}" th:object="${title}"  method="post"> -->
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Tytuł</th>
+			<th>Autor</th>
+			<th>Delete Path</th>
+			<th>Delete Param</th>
+		</tr>
+
+		<tr th:each="book : ${books}">
+			<td th:text="${book.id}">id</td>
+			<td th:text="${book.title}">title</td>
+			<td th:text="${book.authors}">authors</td>
+			
+			<td>
+			<button><a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>X</span></a></button> 
+			</td>
+			<td>
+				<form th:action="@{/booksTable/del2/}" th:object="${book}" method="post">
+					<input type="hidden" name="id" th:value="${book.id}" /> 
+					<input type="submit"  value="X" />
+				</form>
+			</td>
+
+		</tr>
+
+	</table>
+
+</body>
+</html>

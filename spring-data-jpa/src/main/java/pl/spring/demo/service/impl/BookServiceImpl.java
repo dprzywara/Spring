@@ -32,6 +32,12 @@ public class BookServiceImpl implements BookService {
     public List<BookTo> findBooksByAuthor(String author) {
         return BookMapper.map2To(bookRepository.findBookByAuthor(author));
     }
+    @Override
+    @Transactional
+    public void deleteBook(Long id) {
+    	//return bookRepository.delete(id);
+    	bookRepository.delete(id);
+    }
 
     @Override
     @Transactional(readOnly = false)
