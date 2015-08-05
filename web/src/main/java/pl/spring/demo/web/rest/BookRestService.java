@@ -10,6 +10,7 @@ import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @ResponseBody
@@ -31,12 +32,21 @@ public class BookRestService {
     public BookTo saveBook(@RequestBody BookTo book) {
         return bookService.saveBook(book);
     }
+    @RequestMapping(value = "/book", method = RequestMethod.PUT)
+    public void updateBook(@RequestBody BookTo book) {
+    	bookService.saveBook(book);
+    }
+    @RequestMapping(value = "/book", method = RequestMethod.DELETE)
+    public void delBook(@RequestBody BookTo book) {
+    	 bookService.deleteBook(book);
+    }
     
     //delete book
     @RequestMapping(value="booksTable/del/{id}", method = RequestMethod.GET)
-    public String delete (@PathVariable Long id) {
-    	 bookService.deleteBook(id);
-       // return "redirect:/users";
-    	 return "deleteConfirm";
+    public String delete (@PathVariable Long id,Map<String, Object> params) {
+    	 BookTo book = bookService.findBookById(id);
+    	 bookService.deleteBookById(id);
+    	 params.put("book", book);
+        return "Book deleted";
     }
 }

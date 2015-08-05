@@ -24,10 +24,11 @@
 			<td th:text="${book.authors}">authors</td>
 			
 			<td>
-			<button><a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>X</span></a></button> 
+			<button>
+			<a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>X</span></a></button> 
 			</td>
 			<td>
-				<form th:action="@{/booksTable/del2/}" th:object="${book}" method="post">
+				<form th:action="@{/booksTable}" th:object="${book}" method="post">
 					<input type="hidden" name="id" th:value="${book.id}" /> 
 					<input type="submit"  value="X" />
 				</form>

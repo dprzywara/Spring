@@ -29,12 +29,11 @@ public class BookController {
     	params.put("books", allBooks);
     	return "bookTable";
     }
-    @RequestMapping(value = "/booksTable/del2", method = RequestMethod.POST)
+    @RequestMapping(value = "/booksTable", method = RequestMethod.POST)
     public String deletedBook(@RequestParam("id") Long id,Map<String, Object> params) {
-    	//final List<BookTo> book = bookService.findBooksByTitle(title);
-    	System.out.println("Controler id = "+id);
-    	bookService.deleteBook(id);
-    	params.put("id", id);
+    	BookTo book = bookService.findBookById(id);
+    	bookService.deleteBookById(id);
+    	params.put("book", book);
     	return "deleteConfirm";
     }
     

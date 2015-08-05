@@ -6,8 +6,14 @@
     <link rel="stylesheet" th:href="@{/static/application.css}" href="/static/application.css" />
 </head>
 <body>
-<!--     <p class="sample" th:inline="text">[[${book.title}]]</p> -->
-    <p th:inline="text" >Książka o tytule</p>
-<!--      ${book.title} została usunięta </p> -->
+
+<div class="message">
+<marquee>
+   <p>
+   Książka o tytule <span th:text="${book.title}" />  została usunięta.
+   </p> </marquee> 
+	<button><a th:href="@{/booksTable}"><span>OK</span></a></button> 
+</div>
+   
 </body>
 </html>
