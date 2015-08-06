@@ -12,7 +12,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
 import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+//import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import com.jayway.jsonpath.JsonPath;
+
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 import pl.spring.demo.web.utils.FileUtils;
@@ -78,13 +84,17 @@ public class BookRestServiceTest {
         // given
         File file = FileUtils.getFileFromClasspath("classpath:pl/spring/demo/web/json/bookToSave.json");
         String json = FileUtils.readFileToString(file);
+        
+        Mockito.when(bookService.saveBook(Mockito.any(BookTo.class))).thenReturn(new BookTo(1L, "", ""));
+        
         // when
         ResultActions response = this.mockMvc.perform(post("/book")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.getBytes()));
         // then
-        response.andExpect(status().isOk());
+        response.andExpect(status().isOk())
+        .andExpect(jsonPath("id").value(1));
     }
     @Test
     public void testShouldDeleteBook() throws Exception {
@@ -100,5 +110,50 @@ public class BookRestServiceTest {
     	
     	// then
     	response.andExpect(status().isOk());
+    	Mockito.verify(bookService).deleteBook(Mockito.any(BookTo.class));
     }
+    @Test
+    public void testShouldDeleteBookById() throws Exception {
+    	// given
+    	Long id=2L;
+    	String title="tytul";
+    	String authors="Zenon Loska";
+    	final BookTo book = new BookTo(id,title,authors);
+    	Mockito.when(bookService.deleteBookById(Mockito.anyLong())).thenReturn(book);
+    	Mockito.when(bookService.findBookById(Mockito.anyLong())).thenReturn(book);
+    	// when
+    	ResultActions response = this.mockMvc.perform(delete("/book/2")
+    			.accept(MediaType.ALL)
+    			.contentType(MediaType.ALL));
+    	
+    	// then
+    	Mockito.verify(bookService).deleteBookById(Mockito.anyLong());
+    	response.andExpect(status().isOk())
+    	.andExpect(jsonPath("id").value(book.getId().intValue()))
+    	.andExpect(jsonPath("title").value(book.getTitle()));
+    	
+    }
+//    @Test
+//    public void testShouldReturnAllBooks() throws Exception {
+//    	// given
+//    	Long id=2L;
+//    	String title="tytul";
+//    	String authors="Zenon Loska";
+//    	final BookTo book1 = new BookTo(id,title,authors);
+//    	final BookTo book2 = new BookTo(new Long(2),"tythgasdfhg",authors);
+//    	
+//    	Mockito.when(bookService.findAllBooks()).thenReturn(Arrays.asList(book1,book2));
+//    	// when
+//    	ResultActions response = this.mockMvc.perform(delete("/booksTable")
+//    			.accept(MediaType.ALL)
+//    			.contentType(MediaType.ALL));
+//    	
+//    	// then
+//    	Mockito.verify(bookService).findAllBooks();
+//    	response.andExpect(status().isOk())
+//    	.andExpect(view().name("bookTable"))
+//    	.andExpect(model().attribute("books", containsInAnyOrder(book1,book2)));
+//    	
+//    	
+//    }
 }

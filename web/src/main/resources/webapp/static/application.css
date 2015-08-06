@@ -1,25 +1,29 @@
 .sample {
     color: red;
 }
-table, td, th {
-    border: 2px solid blue;
-    
+table{
+    border: 6px ridge DarkGreen;
+    background-color: LightGreen;
      margin-left: auto;
     margin-right: auto;
     margin-top: 100px;
      vertical-align: middle;
+     table-layout: fixed; width: 50%
 }
 
 td{
-    background-color: yellow;
+    background-color: GreenYellow;
+    border: 2px solid Green;
     color: black;
     text-align: left;
     padding: 12px;
     font-weight:bold; 
+    vertical-align:middle;
 }
 
 th {
-	background-color: orange;
+	border: 2px ridge black;
+	background-color: ForestGreen;
     text-align: center;
    font-weight:bold; 
    font-size: 150%;
@@ -28,7 +32,7 @@ th {
 	margin-top: 100px;
 	width: 520px;
     padding: 10px;
-    border: 5px solid gray;
+    border: 5px solid black;
     margin-left: auto;
     margin-right: auto;
     vertical-align: middle;
@@ -37,5 +41,21 @@ th {
    font-size: 150%;
    text-align: center;
 }
-.message.span {
-	color: black;}
+.message span {
+	
+	color: orange;
+	font-weight:bold; 
+	}
+caption{
+	
+	caption-side: bottom;
+	
+	
+}
+
+table button{
+	width:100%;
+	height:180%;
+	 background-color: LightYellow;
+	
+}

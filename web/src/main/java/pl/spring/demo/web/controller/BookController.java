@@ -2,6 +2,7 @@ package pl.spring.demo.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,12 @@ public class BookController {
     public String deletedBook(@RequestParam("id") Long id,Map<String, Object> params) {
     	BookTo book = bookService.findBookById(id);
     	bookService.deleteBookById(id);
-    	params.put("book", book);
+    	params.put("title", book.getTitle());
+    	return "deleteConfirm";
+    }
+    @RequestMapping(value = "/deleteConfirm", method = RequestMethod.GET)
+    public String confirm(@RequestParam("title") String title,Map<String, Object> params) {
+    	params.put("title", title);
     	return "deleteConfirm";
     }
     

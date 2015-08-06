@@ -10,33 +10,34 @@
 	<!-- 	<table >border="1" style="width: 300px"> -->
 	<!-- <form th:action="@{/bookTable/del/}" th:object="${title}"  method="post"> -->
 	<table>
+	<tr>
+	<th colspan="4" style="color:white">Books Table</th></tr>
 		<tr>
 			<th>Id</th>
 			<th>Tytuł</th>
 			<th>Autor</th>
-			<th>Delete Path</th>
-			<th>Delete Param</th>
+			<th>Option</th>
 		</tr>
 
 		<tr th:each="book : ${books}">
-			<td th:text="${book.id}">id</td>
+			<td th:text="${book.id}" style="text-align: center">id</td>
 			<td th:text="${book.title}">title</td>
 			<td th:text="${book.authors}">authors</td>
 			
-			<td>
-			<button>
-			<a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>X</span></a></button> 
-			</td>
-			<td>
+<!-- 			<td style="text-align: center"> -->
+<!-- 			<button> -->
+<!-- 			<a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>Delete</span></a></button>  -->
+<!-- 			</td> -->
+			<td style="text-align: center">
 				<form th:action="@{/booksTable}" th:object="${book}" method="post">
 					<input type="hidden" name="id" th:value="${book.id}" /> 
-					<input type="submit"  value="X" />
+					<input type="submit"  value="Delete" />
 				</form>
 			</td>
 
 		</tr>
-
 	</table>
+	
 
 </body>
 </html>

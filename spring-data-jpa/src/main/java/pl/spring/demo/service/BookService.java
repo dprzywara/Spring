@@ -10,8 +10,8 @@ public interface BookService {
     List<BookTo> findAllBooks();
     List<BookTo> findBooksByTitle(String title);
     List<BookTo> findBooksByAuthor(String author);
-    void deleteBookById(Long id);
-    void deleteBook(BookTo book);
+    BookTo deleteBookById(Long id);
+    boolean deleteBook(BookTo book);
     BookTo saveBook(BookTo book);
     BookTo findBookById(Long id);
 }

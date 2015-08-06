@@ -3,6 +3,7 @@ package pl.spring.demo.web.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import pl.spring.demo.mapper.BookMapper;
 import pl.spring.demo.repository.BookRepository;
@@ -33,20 +34,29 @@ public class BookRestService {
         return bookService.saveBook(book);
     }
     @RequestMapping(value = "/book", method = RequestMethod.PUT)
-    public void updateBook(@RequestBody BookTo book) {
-    	bookService.saveBook(book);
+    public BookTo updateBook(@RequestBody BookTo book) {
+    	return bookService.saveBook(book);
+    }
+    @RequestMapping(value = "/bookId", method = RequestMethod.DELETE)
+    public void delBook(@RequestBody long id) {
+    	if(bookService.findBookById(id)!=null){
+    	 bookService.deleteBookById(id);
+    	}
     }
     @RequestMapping(value = "/book", method = RequestMethod.DELETE)
     public void delBook(@RequestBody BookTo book) {
-    	 bookService.deleteBook(book);
+    	bookService.deleteBook(book);
+    	
     }
     
-    //delete book
-    @RequestMapping(value="booksTable/del/{id}", method = RequestMethod.GET)
-    public String delete (@PathVariable Long id,Map<String, Object> params) {
-    	 BookTo book = bookService.findBookById(id);
-    	 bookService.deleteBookById(id);
-    	 params.put("book", book);
-        return "Book deleted";
+    @RequestMapping(value="book/{id}", method = RequestMethod.DELETE)
+    public BookTo delete (@PathVariable Long id,Map<String, Object> params) {
+    	BookTo book ;
+    	if ((book= bookService.findBookById(id))!=null) {
+    		bookService.deleteBookById(id);
+			return book;
+		}	
+    	return null;
+
     }
 }
