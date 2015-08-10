@@ -7,37 +7,69 @@
 	href="/static/application.css" />
 </head>
 <body>
-	<!-- 	<table >border="1" style="width: 300px"> -->
-	<!-- <form th:action="@{/bookTable/del/}" th:object="${title}"  method="post"> -->
 	<table>
-	<tr>
-	<th colspan="4" style="color:white">Books Table</th></tr>
+		<tr>
+			<th id="Tabtitle" colspan="5">Books Table</th>
+		</tr>
 		<tr>
 			<th>Id</th>
 			<th>Tytuł</th>
 			<th>Autor</th>
-			<th>Option</th>
+			<th colspan="2">Option</th>
 		</tr>
 
 		<tr th:each="book : ${books}">
-			<td th:text="${book.id}" style="text-align: center">id</td>
-			<td th:text="${book.title}">title</td>
-			<td th:text="${book.authors}">authors</td>
-			
-<!-- 			<td style="text-align: center"> -->
-<!-- 			<button> -->
-<!-- 			<a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>Delete</span></a></button>  -->
-<!-- 			</td> -->
-			<td style="text-align: center">
-				<form th:action="@{/booksTable}" th:object="${book}" method="post">
-					<input type="hidden" name="id" th:value="${book.id}" /> 
-					<input type="submit"  value="Delete" />
+			<td colspan="4" style="padding: 0px;">
+				<form th:action="@{/booksTable/up}" th:object="${book}"
+					method="post" style="display: inline !important;">
+					<input id="cellstyle" type="text" name="id" th:value="${book.id}"
+						style="text-align: center" /> <input id="cellstyle" type="text"
+						name="title" th:value="${book.title}" /> <input id="cellstyle"
+						type="text" name="authors" th:value="${book.authors}" />
+					<button id="buttonForm" type="submit">update</button>
 				</form>
 			</td>
-
+			<td class="center" style="padding: 0px;">
+				<form th:action="@{/booksTable}" th:object="${book}" method="post">
+					<input type="hidden" name="id" th:value="${book.id}" />
+					<button id="buttonStyle" type="submit">delete</button>
+				</form>
+			</td>
 		</tr>
 	</table>
-	
 
+
+
+	<div class="center">
+		<form action="#" th:action="@{/booksTable/add}" method="get">
+			<p>
+				<input type="submit" value="Add new Book" />
+			</p>
+		</form>
+		<form action="#" th:action="@{/booksTable/add2}" method="get">
+			<p>
+				<input type="submit" value="Add new Book2" />
+			</p>
+		</form>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 			<td style="text-align: center"> -->
+	<!-- 			<button> -->
+	<!-- 			<a th:href="@{/booksTable/del/{id}(id=${book.id})}"><span>Delete</span></a></button>  -->
+	<!-- 			</td> -->
 </body>
 </html>

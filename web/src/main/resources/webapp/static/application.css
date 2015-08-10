@@ -1,61 +1,114 @@
 .sample {
-    color: red;
-}
-table{
-    border: 6px ridge DarkGreen;
-    background-color: LightGreen;
-     margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-     vertical-align: middle;
-     table-layout: fixed; width: 50%
+	color: red;
 }
 
-td{
-    background-color: GreenYellow;
-    border: 2px solid Green;
-    color: black;
-    text-align: left;
-    padding: 12px;
-    font-weight:bold; 
-    vertical-align:middle;
+body {
+	background-color: LemonChiffon;
+	background-image: url("books.png");
+	background-repeat: no-repeat;
+	background-position: right 30px top 30px;
+	background-size: 20%;
+	background-attachment: fixed;
+}
+
+table {
+	border: 6px ridge DarkGreen;
+	background-color: LightGreen;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	vertical-align: middle;
+	table-layout: fixed;
+	width: 50%
+}
+
+td {
+	background-color: GreenYellow;
+	border: 2px solid Green;
+	color: black;
+	text-align: left;
+	padding: 12px;
+	font-weight: bold;
+	vertical-align: middle;
+	font-size: 120%;
 }
 
 th {
 	border: 2px ridge black;
 	background-color: ForestGreen;
-    text-align: center;
-   font-weight:bold; 
-   font-size: 150%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 180%;
 }
+
 .message {
 	margin-top: 100px;
 	width: 520px;
-    padding: 10px;
-    border: 5px solid black;
-    margin-left: auto;
-    margin-right: auto;
-    vertical-align: middle;
+	padding: 10px;
+	border: 5px solid black;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: middle;
 	background-color: green;
-   font-weight:bold; 
-   font-size: 150%;
-   text-align: center;
-}
-.message span {
-	
-	color: orange;
-	font-weight:bold; 
-	}
-caption{
-	
-	caption-side: bottom;
-	
-	
+	font-weight: bold;
+	font-size: 150%;
+	text-align: center;
 }
 
-table button{
-	width:100%;
-	height:180%;
-	 background-color: LightYellow;
-	
+.message span {
+	color: orange;
+	font-weight: bold;
+}
+
+caption {
+	caption-side: bottom;
+}
+
+#buttonStyle {
+	background-color: LightYellow;
+	padding: 0px;
+	font-size: 120%;
+	width: 100%;
+	height: 100%;
+}
+
+#buttonForm {
+	background-color: LightYellow;
+	padding: 0px;
+	font-size: 120%;
+	width: 25%;
+	float: right;
+	display: inline-block;
+}
+
+#inputStyle {
+	width: 100%;
+	height: 100%;
+	background-color: GreenYellow;
+	padding: 0 0 0 0;
+	font-size: 100%;
+	font-weight: bold;
+	float: left;
+	display: inline-block;
+}
+
+#cellstyle {
+	background-color: GreenYellow;
+	padding: 7px;
+	font-weight: bold;
+	float: left;
+	display: inline-block;
+	font-size: 70%;
+}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-right: 44%;
+	vertical-align: middle;
+}
+
+#Tabtitle {
+	color: white;
 }

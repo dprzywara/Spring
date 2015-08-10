@@ -24,10 +24,6 @@ public class BookRestService {
     public List<BookTo> findBooksByTitle(@RequestParam("titlePrefix") String titlePrefix) {
         return bookService.findBooksByTitle(titlePrefix);
     }
-//    @RequestMapping(value = "/books-by-title/{title}")
-//    public List<BookTo> findBooksByTitle(@PathVariable("title") String titlePrefix) {
-//    	return bookService.findBooksByTitle(titlePrefix);
-//    }
 
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public BookTo saveBook(@RequestBody BookTo book) {

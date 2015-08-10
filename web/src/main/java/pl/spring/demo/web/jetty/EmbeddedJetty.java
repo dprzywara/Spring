@@ -1,6 +1,8 @@
 package pl.spring.demo.web.jetty;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.session.HashSessionManager;
+import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
@@ -42,6 +44,9 @@ public class EmbeddedJetty {
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), MAPPING_URL);
         contextHandler.addEventListener(new ContextLoaderListener(context));
         contextHandler.setResourceBase(new ClassPathResource("webapp").getURI().toString());
+        HashSessionManager manager = new HashSessionManager();
+        SessionHandler sessions = new SessionHandler(manager);
+        contextHandler.setHandler(sessions);
         return contextHandler;
     }
 

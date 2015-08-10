@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8" />
+<title>Tabela z książkami</title>
+<link rel="stylesheet" th:href="@{/static/application.css}"
+	href="/static/application.css" />
+</head>
+<body>
+	<div class="center">
+<!-- 	  <form action="#" th:action="@{/booksTable/add}" th:object="${book}" method="post"> -->
+<!--     	<p>Id: <input type="text" th:field="*{id}" /></p> -->
+<!--         <p>Title: <input type="text" th:field="*{title}" /></p> -->
+<!--         <p>Authors: <input type="text" th:field="*{authors}" /></p> -->
+<!--         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p> -->
+<!--     </form> -->
+	  <form action="#" th:action="@{/booksTable/add2}" method="post">
+    	<p>Id: <input type="text" name="id"  /></p>
+        <p>Title: <input type="text" name="title"  /></p>
+        <p>Authors: <input type="text" name="authors" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+    
+<!--     <h1>Result</h1> -->
+<!--     <p th:text="'id: ' + ${greeting.id}" /> -->
+<!--     <p th:text="'content: ' + ${greeting.content}" /> -->
+<!--     <a href="/greeting">Submit another message</a> -->
+</div>
+</body>
+</html>
