@@ -1,6 +1,10 @@
-insert into book (id, title) values (1, 'Pierwsza książka');
-insert into book (id, title) values (2, 'Druga książka');
-insert into book (id, title) values (3, 'Trzecia książka');
+insert into library (id, name) values (1, 'Pierwsza biblioteka');
+insert into library (id, name) values (2, 'Druga biblioteka');
+insert into library (id, name) values (3, 'Trzecia biblioteka');
+
+insert into book values (1, 'Pierwsza książka',1);
+insert into book values (2, 'Druga książka',1);
+insert into book values (3, 'Trzecia książka',2);
 
 insert into author (id, first_name, last_name) values (7, 'Jan', 'Kowalski');
 insert into author (id, first_name, last_name) values (8, 'Zbigniew', 'Nowak');

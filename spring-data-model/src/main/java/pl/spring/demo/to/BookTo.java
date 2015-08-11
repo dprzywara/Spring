@@ -4,14 +4,24 @@ public class BookTo {
     private Long id;
     private String title;
     private String authors;
+    private Long libraryId;
 
-    public BookTo() {
+    public Long getLibraryId() {
+		return libraryId;
+	}
+
+	public void setLibraryId(Long libraryId) {
+		this.libraryId = libraryId;
+	}
+
+	public BookTo() {
     }
 
-    public BookTo(Long id, String title, String authors) {
+    public BookTo(Long id, String title, String authors, Long libId) {
         this.id = id;
         this.title = title;
         this.authors = authors;
+        this.libraryId=libId;
     }
 
     public Long getId() {

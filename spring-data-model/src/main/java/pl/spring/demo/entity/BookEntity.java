@@ -13,6 +13,9 @@ public class BookEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 50)
     private String title;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    private LibraryEntity library;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "BOOK_AUTHOR",
@@ -20,8 +23,18 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)}
     )
     private Set<AuthorEntity> authors = new HashSet<>();
+    
+    
 
-    // for hibernate
+    public LibraryEntity getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(LibraryEntity library) {
+		this.library = library;
+	}
+
+	// for hibernate
     protected BookEntity() {
 }
 
