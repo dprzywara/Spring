@@ -7,4 +7,5 @@
     <import resource="../common_configuration/CommonDatabase-context.xml"/>
     <import resource="../common_configuration/CommonSpring-context.xml"/>
 
+<!-- <bean id="bookService" class="pl.spring.demo.service.impl.BookServiceImpl" /> -->
 </beans>

@@ -28,11 +28,11 @@ public class LibraryEntity {
 
 	}
 
-	public LibraryEntity(Long id, String name, Collection<BookEntity> books) {
+	public LibraryEntity(Long id, String name){//, Collection<BookEntity> books) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.books = books;
+		//this.books = books;
 	}
 
 	public Long getId() {

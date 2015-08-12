@@ -1,10 +1,12 @@
 package pl.spring.demo.dao.impl;
 
-import pl.spring.demo.dao.BookDao;
-import pl.spring.demo.entity.BookEntity;
+import java.util.List;
 
 import javax.persistence.TypedQuery;
-import java.util.List;
+
+import pl.spring.demo.criteria.BookSearchCriteria;
+import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.entity.BookEntity;
 
 public class BookDaoImpl extends AbstractDao<BookEntity, Long> implements BookDao {
 
@@ -15,4 +17,18 @@ public class BookDaoImpl extends AbstractDao<BookEntity, Long> implements BookDa
         query.setParameter("title", title);
         return query.getResultList();
     }
+
+	@Override
+	public List<BookEntity> search(BookSearchCriteria bsc) {
+		//JPQLQuery<BookEntity> query = new JPAQuery (entityManager); 
+		//JPQLQuery
+		//JPQ
+		return null;
+	}
+    
+    
+    
+    
+    
+    
 }

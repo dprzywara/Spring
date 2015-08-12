@@ -15,6 +15,7 @@ public class BookEntity implements Serializable {
     private String title;
     
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="lib_id", nullable=false)
     private LibraryEntity library;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

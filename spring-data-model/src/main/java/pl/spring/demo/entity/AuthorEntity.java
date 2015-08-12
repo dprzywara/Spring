@@ -15,7 +15,7 @@ public class AuthorEntity {
 
     //for hibernate
     protected AuthorEntity() {
-
+    	
     }
 
     public AuthorEntity(Long id, String firstName, String lastName) {
