@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pl.spring.demo.entity.LibraryEntity;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "CommonRepositoryTest-context.xml")
 public class LibraryRepositoryTest {
@@ -20,17 +19,16 @@ public class LibraryRepositoryTest {
 	@Autowired
 	private LibraryRepository libraryRepository;
 
-	
-	  @Test
-	    public void testShouldFindLibraryByName() {
-	        // given
-	        final String name = "p";
-	        // when
-	        List<LibraryEntity> librariesEntity = libraryRepository.findLibraryByName(name);
-	        // then
-	        assertNotNull(librariesEntity);
-	        assertFalse(librariesEntity.isEmpty());
-	        assertEquals("Pierwsza biblioteka", librariesEntity.get(0).getName());
-	    }
+	@Test
+	public void testShouldFindLibraryByName() {
+		// given
+		final String name = "p";
+		// when
+		List<LibraryEntity> librariesEntity = libraryRepository.findLibraryByName(name);
+		// then
+		assertNotNull(librariesEntity);
+		assertFalse(librariesEntity.isEmpty());
+		assertEquals("Pierwsza biblioteka", librariesEntity.get(0).getName());
+	}
 
 }

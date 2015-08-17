@@ -10,23 +10,20 @@ import pl.spring.demo.service.LibraryService;
 
 @Service
 @Transactional(readOnly = true)
-public class LibraryServiceImpl implements LibraryService{
-	
+public class LibraryServiceImpl implements LibraryService {
+
 	@Autowired
 	private LibraryRepository libraryRepository;
 
 	@Override
-    @Transactional(readOnly = false)
+	@Transactional(readOnly = false)
 	public LibraryEntity removeLibrary(Long id) {
 		LibraryEntity libEntity = libraryRepository.findOne(id);
-		if(libEntity!=null){
-		libraryRepository.delete(id);
-		return libEntity;
+		if (libEntity != null) {
+			libraryRepository.delete(id);
+			return libEntity;
 		}
 		return null;
 	}
-	
-	
-	
 
 }

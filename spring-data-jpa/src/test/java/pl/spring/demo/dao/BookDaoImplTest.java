@@ -1,10 +1,13 @@
 package pl.spring.demo.dao;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import pl.spring.demo.criteria.BookSearchCriteria;
 import pl.spring.demo.entity.BookEntity;
 
 import java.util.List;
@@ -17,29 +20,68 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(locations = "CommonDaoTest-context.xml")
 public class BookDaoImplTest {
 
-    @Autowired
-    private BookDao bookDao;
+	@Autowired
+	private BookDao bookDao;
 
-    @Test
-    public void testShouldFindBookById() {
-        // given
-        final long bookId = 1;
-        // when
-        BookEntity bookEntity = bookDao.findOne(bookId);
-        // then
-        assertNotNull(bookEntity);
-        assertEquals("Pierwsza książka", bookEntity.getTitle());
-    }
+	private BookSearchCriteria bookCriteria;
 
-    @Test
-    public void testShouldFindBooksByTitle() {
-        // given
-        final String bookTitle = "p";
-        // when
-        List<BookEntity> booksEntity = bookDao.findBookByTitle(bookTitle);
-        // then
-        assertNotNull(booksEntity);
-        assertFalse(booksEntity.isEmpty());
-        assertEquals("Pierwsza książka", booksEntity.get(0).getTitle());
-    }
+	@Before
+	public void before() {
+		bookCriteria = new BookSearchCriteria();
+	}
+
+	@Test
+	public void testShouldFindBookById() {
+		// given
+		final long bookId = 1;
+		// when
+		BookEntity bookEntity = bookDao.findOne(bookId);
+		// then
+		assertNotNull(bookEntity);
+		assertEquals("Pierwsza książka", bookEntity.getTitle());
+	}
+
+	@Test
+	public void testShouldFindBooksByTitle() {
+		// given
+		final String bookTitle = "p";
+		// when
+		List<BookEntity> booksEntity = bookDao.findBookByTitle(bookTitle);
+		// then
+		assertNotNull(booksEntity);
+		assertFalse(booksEntity.isEmpty());
+		assertEquals("Pierwsza książka", booksEntity.get(0).getTitle());
+	}
+
+	@Test
+	public void shouldFindBooksByAuthorLastNamePrefix() {
+		// given
+		bookCriteria.setAuthor("N");
+
+		// when
+		List<BookEntity> result = bookDao.findBooksByCriteria(bookCriteria);
+
+		// then
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals("Druga książka", result.get(0).getTitle());
+
+	}
+
+	@Test
+	public void shouldFindOneBookForAllCriteria() {
+		// given
+		bookCriteria.setTitle("D");
+		bookCriteria.setAuthor("Z");
+		bookCriteria.setAuthor("N");
+
+		// when
+		List<BookEntity> result = bookDao.findBooksByCriteria(bookCriteria);
+
+		// then
+		assertNotNull(result);
+		assertEquals(1, result.size());
+		assertEquals("Druga książka", result.get(0).getTitle());
+
+	}
 }

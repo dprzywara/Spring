@@ -1,6 +1,5 @@
 package pl.spring.demo.service;
 
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,22 +19,20 @@ public class LibraryServiceImplTest {
 	@Mock
 	private LibraryRepository libraryRepository;
 
-
 	@Before
 	public void setUpt() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
-	
+
 	@Test
 	public void shouldCallRemoveMethod() {
-		//given
-		Long id=1L;
+		// given
+		Long id = 1L;
 		LibraryEntity library = new LibraryEntity(id, "library");
 		Mockito.when(libraryRepository.findOne(id)).thenReturn(library);
-		//when
+		// when
 		libraryService.removeLibrary(id);
-		//then
+		// then
 		Mockito.verify(libraryRepository).delete(id);
 	}
 
