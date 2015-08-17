@@ -1,4 +1,0 @@
-pl\spring\demo\dao\Dao.class
-pl\spring\demo\exceptions\NullLibraryIdException.class
-pl\spring\demo\criteria\BookSearchCriteria.class
-pl\spring\demo\dao\impl\AbstractDao.class
