@@ -5,6 +5,7 @@ insert into library (id, name) values (3, 'Trzecia biblioteka');
 insert into book (id,title,lib_id) values (1, 'Pierwsza książka',1);
 insert into book (id,title,lib_id) values (2, 'Druga książka',1);
 insert into book (id,title,lib_id) values (3, 'Trzecia książka',2);
+insert into book (id,title,lib_id) values (4, 'Potop',3);
 
 insert into author (id, first_name, last_name) values (7, 'Jan', 'Kowalski');
 insert into author (id, first_name, last_name) values (8, 'Zbigniew', 'Nowak');

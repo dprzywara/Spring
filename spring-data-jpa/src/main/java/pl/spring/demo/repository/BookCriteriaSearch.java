@@ -5,9 +5,9 @@ import java.util.List;
 import pl.spring.demo.criteria.BookSearchCriteria;
 import pl.spring.demo.entity.BookEntity;
 
-public interface MyCriteriaInterface {
+public interface BookCriteriaSearch {
 	
 	
-	List<BookEntity> search(BookSearchCriteria bsc);
+	List<BookEntity> findBooksByCriteria(BookSearchCriteria bsc);
 
 }
