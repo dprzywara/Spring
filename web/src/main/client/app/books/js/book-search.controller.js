@@ -10,7 +10,8 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
     $scope.firstName= '';
     $scope.lastName= '';
     
-
+   // $scope.book={title=undefined,authors=[]}
+//push
     var removeBookById = function (bookId) {
         for (var i = 0; i < $scope.books.length; i = i + 1) {
             if ($scope.books[i].id === bookId) {
