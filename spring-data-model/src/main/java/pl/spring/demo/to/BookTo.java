@@ -1,11 +1,13 @@
 package pl.spring.demo.to;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class BookTo {
     private Long id;
     private String title;
-    private Set<AuthorTo> authors;
+    private Set<AuthorTo> authors= new HashSet<AuthorTo>();
+  
     public BookTo() {
     }
 

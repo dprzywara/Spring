@@ -5,9 +5,19 @@
     <div flash-message="5000" ></div>
 
     <p>Wyszukaj autora:</p>
-    <input type="text" ng-model="prefix">
+<!--     <input type="text" ng-model="prefix"> -->
 <!--     <button ng-click="search()">Szukaj</button> -->
-<!--     <button ng-click="addBook()">Dodaj książkę</button> -->
+<!--     <button ng-click="get()">Pokaz</button> -->
+
+
+            <input type="text" ng-model="prefix" />
+            <label>Search By :</label>
+                <select ng-model="queryBy">
+                    <option value="firstName" selected="selected" >First Name</option>
+                    <option value="lastName">Last Name</option>
+                </select>   
+
+    <hr>
 
     <table>
         <tr>
@@ -15,7 +25,7 @@
             <th>Imie</th>
             <th>Nazwisko</th>
         </tr>
-        <tr ng-repeat="author in authors">
+        <tr ng-repeat="author in authors| filter:queryFilter:startsWith">
          	<td>{{ author.id }}</td>
             <td>{{ author.firstName }}</td>
             <td>{{ author.lastName }}</td>

@@ -1,11 +1,13 @@
 package pl.spring.demo.service.impl;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.spring.demo.entity.AuthorEntity;
 import pl.spring.demo.mapper.AuthorMapper;
 import pl.spring.demo.repository.AuthorRepository;
 import pl.spring.demo.service.AuthorService;
@@ -19,8 +21,8 @@ public class AuthorServiceImpl implements AuthorService {
 	private AuthorRepository authorRepository;
 
 	@Override
-	public List<AuthorTo> getAllAuthors() {
-		return AuthorMapper.map2To(authorRepository.findAll());
+	public Set<AuthorTo> getAllAuthors() {
+		return AuthorMapper.map2To(new HashSet<AuthorEntity>(authorRepository.findAll()));
 	}
 
 }

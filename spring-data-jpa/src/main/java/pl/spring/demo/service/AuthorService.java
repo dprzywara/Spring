@@ -1,11 +1,11 @@
 package pl.spring.demo.service;
 
-import java.util.List;
+import java.util.Set;
 
 import pl.spring.demo.to.AuthorTo;
 
 public interface AuthorService {
 
 	
-	 List<AuthorTo> getAllAuthors();
+	 Set<AuthorTo> getAllAuthors();
 }

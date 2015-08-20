@@ -12,24 +12,16 @@ import java.util.stream.Collectors;
 public class BookMapper {
 
     public static BookTo map(BookEntity bookEntity) {
-    	Set<AuthorTo> authors= new HashSet<AuthorTo>() ;
     	
         if (bookEntity != null) {
-        	for (AuthorEntity author : bookEntity.getAuthors()) {
-				authors.add(AuthorMapper.map(author));
-			}
-            return new BookTo(bookEntity.getId(), bookEntity.getTitle(), authors);
+            return new BookTo(bookEntity.getId(), bookEntity.getTitle(), AuthorMapper.map2To(bookEntity.getAuthors()));
         }
         return null;
     }
 
     public static BookEntity map(BookTo bookTo) {
-    	Set<AuthorEntity> authors= new HashSet<AuthorEntity>() ;
         if (bookTo != null) {
-        	for (AuthorTo author : bookTo.getAuthors()) {
-				authors.add(AuthorMapper.map(author));
-			}
-            return new BookEntity(bookTo.getId(), bookTo.getTitle());
+            return new BookEntity(bookTo.getId(), bookTo.getTitle(),AuthorMapper.map2Entity(bookTo.getAuthors()));
         }
         return null;
     }
