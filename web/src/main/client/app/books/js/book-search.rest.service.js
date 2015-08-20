@@ -3,13 +3,13 @@ angular.module('app.books').factory('bookRestService', function ($http, currentC
 
     return {
         search: function (titlePrefix) {
-            return $http.get(currentContextPath.get() + 'rest/books-by-title', {params: {titlePrefix: titlePrefix}});
+        	  return $http.get(currentContextPath.get() + 'rest/books/books-by-title', {params: {titlePrefix: titlePrefix}});
         },
         deleteBook: function (bookId) {
-            return $http.delete(currentContextPath.get() + 'rest/book/' + bookId);
+        	return $http.delete(currentContextPath.get() + 'rest/books/book/' + bookId);
         },
         newBook: function (book) {
-            return $http.post(currentContextPath.get() + 'rest/book/' ,book);
+            return $http.post(currentContextPath.get() + 'rest/books/book/' ,book);
         }
     
     };
