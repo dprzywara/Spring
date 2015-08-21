@@ -3,7 +3,7 @@ angular.module('app.authors').controller('AuthorsController', function ($scope, 
 
    $scope.authors=[];
    $scope.prefix='';
-   
+   $scope.queryBy='$';
    
    $scope.get = function () {
        authorsService.get().then(function (response) {

@@ -27,7 +27,7 @@ angular.module('app.books').controller(
 
 			$scope.saveBook = function(book) {
 				
-				if(book.authors.length==0){
+				if(book.authors.length===0){
 					Flash.create('danger', 'Książka musi mieć co najmniej jednego autora.',
 					'custom-class');
 				}
@@ -44,5 +44,15 @@ angular.module('app.books').controller(
 						});
 				}
 			};
+			
+			$scope.deleteAuthor = function (author) {
+		        for (var i = 0; i < $scope.book.authors.length; i = i + 1) {
+		            if ($scope.book.authors[i] === author) {
+		                $scope.book.authors.splice(i, 1);
+		                break;
+		            }
+		        }
+		    };
+			
 
 		});
