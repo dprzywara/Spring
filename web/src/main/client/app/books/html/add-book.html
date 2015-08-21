@@ -6,20 +6,22 @@
 
 <br>
 	<section>
+	  <form name="AddBookForm" novalidate >
 		<div flash-message="5000"></div>
 		<label>tutuł: </label>
-		<input type="text" ng-model="book.title">
-		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)">SaveBook</button>
+		<input type="text" ng-model="book.title" ng-required = "true">
+		<input type="hidden" ng-model="book.authors" id="authors">
+<!-- 		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)" ng-disabled="book.authors.length==0">SaveBook</button> -->
+		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)" ng-disabled="AddBookForm.$invalid">SaveBook</button>
 		<p><b>Authors</b></p>
 		 <table>
         <tr>
-            <th>Id</th>
+       
             <th>Imię</th>
             <th>Nazwisko</th>
             
         </tr>
         <tr ng-repeat="author in book.authors">
-            <td>{{ author.id}}</td>
             <td>{{ author.firstName }}</td>
             <td>{{ author.lastName}}</td>
             
@@ -30,29 +32,11 @@
 <br>
 <button class="btn btn-primary btn-sm" ng-click="addAuthor()">AddAuthor</button>
 		
-
-
+</form>
 	</section>
 
 
 
-
-	<!-- JavaScript plugins (requires jQuery) -->
-	<script src="http://code.jquery.com/jquery.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-	<!-- Angular Material Dependencies -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
 </body>
 </html>
 

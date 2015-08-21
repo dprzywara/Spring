@@ -18,7 +18,6 @@ angular.module('app.books').controller(
 
 				modalInstance.result.then(function(author) {
 					$scope.book.authors.push(author);
-
 					Flash.create('success', 'Autor dodany.', 'custom-class');
 				}, function() {
 					$log.info('Modal dismissed at: ' + new Date());
@@ -28,6 +27,13 @@ angular.module('app.books').controller(
 
 			$scope.saveBook = function(book) {
 				
+				if(book.authors.length==0){
+					Flash.create('danger', 'Książka musi mieć co najmniej jednego autora.',
+					'custom-class');
+				}
+				else{
+					
+				
 				bookService.newBook(book).then(
 						function() {
 							Flash.create('success', 'Książka została dodana.',
@@ -36,7 +42,7 @@ angular.module('app.books').controller(
 						}, function() {
 							Flash.create('danger', 'Wyjątek', 'custom-class');
 						});
-
+				}
 			};
 
 		});

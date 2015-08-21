@@ -1,5 +1,5 @@
 <div>
-    <form name="AddAuthorForm" novalidate>
+    <form name="AddAuthorForm" novalidate id="authorForm">
         <div class="modal-header">
             <h3 class="modal-title">Dodaj Autora:</h3>
         </div>
@@ -8,24 +8,23 @@
             <section>
 		<div flash-message="5000"></div>
 		<label>Podaj imię:</label>
-		 <input type="text" placeholder="Imie" name="firstName" class="form-control" data-ng-model="author.firstName" data-ng-required="true">
-<!-- 		<input type="text" ng-model="title"> -->
+		 <input type="text" placeholder="Imie" id="firstName" name="firstName" class="form-control" data-ng-model="author.firstName" data-ng-required="true">
 		<label>Podaj nazwisko:</label>
 		<input type="text" placeholder="Nazwisko" name="lastName" class="form-control" data-ng-model="author.lastName" data-ng-required="true">
 		
-<!-- 		<input id="allAuthors" type="text"  ng-model="author"> -->
 <br>
 <br>
 
 	</section>
             
-            
+
             
         </div>
         <div class="modal-footer">
          	<button class="btn btn-success" ng-click="ok()" ng-disabled="AddAuthorForm.$invalid" >Save Author</button>
 <!--             <button class="btn btn-warning" ng-click="$dismiss()">Close</button> -->
-<button class="btn btn-warning" ng-click="cancel()">Close</button> 
+<!-- <button class="btn btn-warning" ng-click="cancel()">Close</button>  -->
+<!-- <button class="btn btn-warning" ng-click="validate()">validate</button>  -->
         </div>
     </form>
 </div>

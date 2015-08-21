@@ -13,11 +13,19 @@
         <tr>
             <th>Tytuł</th>
             <th>Autorzy</th>
+            <th>Edytuj</th>
             <th>Usuń</th>
         </tr>
         <tr ng-repeat="book in books">
             <td>{{ book.title }}</td>
-            <td>{{ book.authors }}</td>
+            <td>
+            <text ng-repeat="author in book.authors">
+<!--             <td>{{ book.authors }}</td> -->
+			{{author.firstName}} {{author.lastName}} , </text>
+<!-- 				</td> -->
+            <td>
+                <button ng-click="editModal(book)">Edytuj</button>
+            </td>
             <td>
                 <button ng-click="deleteBook(book.id)">Usuń</button>
             </td>
