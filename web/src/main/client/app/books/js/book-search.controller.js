@@ -59,9 +59,7 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
     $scope.addBook = function () {
         $location.url('/books/add-book');
     };
-    
 
-  // $scope.search(); 
 
 
 });

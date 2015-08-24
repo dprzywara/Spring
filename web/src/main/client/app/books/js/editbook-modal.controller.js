@@ -8,4 +8,14 @@ angular.module('app.books').controller('EditBookModalController', function ($sco
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
+    
+    
+ 
+    
+    
+    
+    
+    
+    
+    
 });
