@@ -12,7 +12,7 @@
 		<input type="text" ng-model="book.title" ng-required = "true">
 		<input type="hidden" ng-model="book.authors" id="authors">
 <!-- 		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)" ng-disabled="book.authors.length==0">SaveBook</button> -->
-		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)" ng-disabled="AddBookForm.$invalid">SaveBook</button>
+		<button class="btn btn-primary btn-sm" type="submit" ng-click="saveBook(book)" >SaveBook</button>
 		<p><b>Authors</b></p>
 		 <table>
         <tr>

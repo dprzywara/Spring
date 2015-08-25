@@ -49,7 +49,6 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
 					}, function() {
 						Flash.create('danger', 'Wyjątek edycja', 'custom-class');
 					});
-			Flash.create('success', 'powrot z modala', 'custom-class');
 		}, function() {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
@@ -60,6 +59,7 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
         $location.url('/books/add-book');
     };
 
+    $scope.search();
 
 
 });

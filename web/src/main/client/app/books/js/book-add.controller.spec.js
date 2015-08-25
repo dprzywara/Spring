@@ -14,12 +14,61 @@ describe('book controller', function () {
     }));
     
     
+    var fakeModal = {
+    	    result: {
+    	        then: function (confirmCallback, cancelCallback) {
+    	            this.confirmCallBack = confirmCallback;
+    	            this.cancelCallback = cancelCallback;
+    	            return this;
+    	        },
+    	    },
+    	    close: function (item) {
+    	        this.result.confirmCallBack(item);
+    	    },
+    	    dismiss: function (item) {
+    	        this.result.cancelCallback(item);
+    	    }
+    	};
+    
+    
     it('addAuthor is defined', inject(function ($controller) {
         // when
         $controller('BookAddController', {$scope: $scope});
         // then
         expect($scope.addAuthor).toBeDefined();
     }));
+    
+    it('addAuthor should add author to the Authorslist', inject(function ($controller, $q, bookService, Flash,$modal) {
+        // given
+        $controller('BookAddController', {$scope: $scope});
+        $scope.book= {id: '1', title: 'ptest',authors:[{firstName: 'firstName0', lastName: 'lastName0'}]};
+        var author={firstName: 'firstName1', lastName: 'lastName1'};
+        spyOn($modal, 'open').and.returnValue(fakeModal); 
+        spyOn(Flash, 'create');
+        // when
+        $scope.addAuthor();
+        fakeModal.close(author);
+        $scope.$digest();
+        // then
+        expect(Flash.create).toHaveBeenCalledWith('success',  'Autor dodany.', 'custom-class');
+        expect($scope.book.authors.length).toBe(2);
+        expect($scope.book.authors[1].lastName).toBe('lastName1');
+    }));
+    
+    it('addAuthor should return flash danger for dismiss modal', inject(function ($controller, $q, bookService, Flash,$modal) {
+    	// given
+    	$controller('BookAddController', {$scope: $scope});
+    	$scope.book= {id: '1', title: 'ptest',authors:[{firstName: 'firstName0', lastName: 'lastName0'}]};
+    	spyOn($modal, 'open').and.returnValue(fakeModal); 
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.addAuthor();
+    	fakeModal.dismiss('close');
+    	$scope.$digest();
+    	// then
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Wyjatek - dodawanie autora', 'custom-class');
+    }));
+    
     
     
     
@@ -29,23 +78,53 @@ describe('book controller', function () {
     	// then
     	expect($scope.saveBook).toBeDefined();
     }));
-    
-    
-    it('deleteAuthor is defined', inject(function ($controller) {
-    	// when
+  
+    it('save book should return flash with warning to fill title', inject(function ($controller, $q, bookService, Flash) {
+    	// given
     	$controller('BookAddController', {$scope: $scope});
+    	var entryAuthors= [{firstName: 'first', lastName: 'last'}];
+    	$scope.book={ title: '',authors : entryAuthors};
+    	$scope.AddBookForm = {
+    			$invalid: true
+    	};
+    	var saveBookDeferred = $q.defer();
+    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.saveBook($scope.book);
+    	saveBookDeferred.resolve();
+    	$scope.$digest();
     	// then
-    	expect($scope.deleteAuthor).toBeDefined();
+    	expect(bookService.newBook).not.toHaveBeenCalled();
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Książka musi mieć tytuł.', 'custom-class');
     }));
-    
-    
+    it('save book should return flash with warning to add authors', inject(function ($controller, $q, bookService, Flash) {
+    	// given
+    	$controller('BookAddController', {$scope: $scope});
+    	$scope.book={ title: 'tere',authors : []};
+    	$scope.AddBookForm = {
+    			$invalid: true
+    	};
+    	var saveBookDeferred = $q.defer();
+    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.saveBook($scope.book);
+    	saveBookDeferred.resolve();
+    	$scope.$digest();
+    	// then
+    	expect(bookService.newBook).not.toHaveBeenCalledWith($scope.book);
+    	expect(Flash.create).not.toHaveBeenCalledWith('danger', 'Książka musi mieć co najmniej jednego autora.', 'custom-class');
+    }));
     
     it('save book should call bookService.newBook', inject(function ($controller, $q, bookService, Flash) {
         // given
         $controller('BookAddController', {$scope: $scope});
         var entryAuthors= [{firstName: 'first', lastName: 'last'}];
         $scope.book={ title: 'test',authors : entryAuthors};
-        
+        $scope.AddBookForm = {
+				  $invalid: false
+				};
         var saveBookDeferred = $q.defer();
         spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
         spyOn(Flash, 'create');
@@ -58,28 +137,54 @@ describe('book controller', function () {
         expect(Flash.create).toHaveBeenCalledWith('success', 'Książka została dodana.', 'custom-class');
         expect($scope.book.title).toBe('test');
     }));
+    it('save book should call bookService.newBook and return danger allert for promise reject', inject(function ($controller, $q, bookService, Flash) {
+    	// given
+    	$controller('BookAddController', {$scope: $scope});
+    	var entryAuthors= [{firstName: 'first', lastName: 'last'}];
+    	$scope.book={ title: 'test',authors : entryAuthors};
+    	$scope.AddBookForm = {
+    			$invalid: false
+    	};
+    	var saveBookDeferred = $q.defer();
+    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.saveBook($scope.book);
+    	saveBookDeferred.reject();
+    	$scope.$digest();
+    	// then
+    	expect(bookService.newBook).toHaveBeenCalledWith($scope.book);
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Wyjątek-dodawanie ksiazki', 'custom-class');
+    }));
     
     
+    
+    it('deleteAuthor is defined', inject(function ($controller) {
+    	// when
+    	$controller('BookAddController', {$scope: $scope});
+    	// then
+    	expect($scope.deleteAuthor).toBeDefined();
+    }));
+    
+ 
     it('delete author should delete author from book list', inject(function ($controller) {
     	// given
     	$controller('BookAddController', {$scope: $scope});
     	var author={firstName: 'first', lastName: 'last'};
     	var entryAuthors= [author,{firstName: 'first2', lastName: 'last2'}];
-    	
     	$scope.book={ title: 'test',authors : entryAuthors};
     	
-    	//spyOn('BookAddController', 'deleteAuthor').and.returnValue(saveBookDeferred.promise);
     	// when
     	$scope.deleteAuthor(author);
     	$scope.$digest();
     	// then
-    	//expect($scope.deleteAuthor).toHaveBeenCalledWith(author); //pytanie
     	expect($scope.book.authors.length).toBe(1);
     	expect($scope.book.authors[0].firstName).toBe('first2');
     }));
     
     
     
+   
     
     
     

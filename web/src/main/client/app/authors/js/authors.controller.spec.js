@@ -50,7 +50,7 @@ describe('authors controller', function () {
     
     
     
-    it('get should return Exception from bookService.get', inject(function ($controller, $q, authorsService,Flash) {
+    it('get should return Flash danger for promise reject in bookService.get', inject(function ($controller, $q, authorsService,Flash) {
     	// given
     	$controller('AuthorsController', {$scope: $scope});
     	

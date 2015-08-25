@@ -9,37 +9,25 @@ describe('book controller', function () {
     
     
     
-//    var fakeModal = {
-//    	    result: {
-//    	        then: function (confirmCallback, cancelCallback) {
-//    	            this.confirmCallBack = confirmCallback;
-//    	            this.cancelCallback = cancelCallback;
-//    	            return this;
-//    	        },
-//    	        catch: function (cancelCallback) {
-//    	            this.cancelCallback = cancelCallback;
-//    	            return this;
-//    	        },
-//    	        finally: function (finallyCallback) {
-//    	            this.finallyCallback = finallyCallback;
-//    	            return this;
-//    	        }
-//    	    },
-//    	    close: function (item) {
-//    	        this.result.confirmCallBack(item);
-//    	    },
-//    	    dismiss: function (item) {
-//    	        this.result.cancelCallback(item);
-//    	    },
-//    	    finally: function () {
-//    	        this.result.finallyCallback();
-//    	    }
-//    	};
+    var fakeModal = {
+    	    result: {
+    	        then: function (confirmCallback, cancelCallback) {
+    	            this.confirmCallBack = confirmCallback;
+    	            this.cancelCallback = cancelCallback;
+    	            return this;
+    	        }
+    	    },
+    	    close: function (item) {
+    	        this.result.confirmCallBack(item);
+    	    },
+    	    dismiss: function (item) {
+    	        this.result.cancelCallback(item);
+    	    }
+    	};
 
     var $scope;
     beforeEach(inject(function ($rootScope) {
         $scope = $rootScope.$new();
-        //fakeModal = new FakeModal();
     }));
 
     it('search is defined', inject(function ($controller) {
@@ -58,6 +46,7 @@ describe('book controller', function () {
     
     it('delete book should call bookService.deleteBook', inject(function ($controller, $q, bookService, Flash) {
         // given
+    	spyOn(bookService, 'search').and.returnValue({then: angular.noop});
         $controller('BookSearchController', {$scope: $scope});
 
         var bookId = 1;
@@ -74,90 +63,102 @@ describe('book controller', function () {
         expect(Flash.create).toHaveBeenCalledWith('success', 'Książka została usunięta.', 'custom-class');
         expect($scope.books.length).toBe(0);
     }));
-//    it('search book should call bookService.search', inject(function ($controller, $q, bookService) {
-//    	// given
-//    	var searchResult = {result: {}};
-//    	
-//    	searchResult.result.then = angular.noop;
-//    	spyOn(bookService, 'search').and.returnValue(searchResult.result);
-//    	
-//    	$controller('BookSearchController', {$scope: $scope});
-//    	
-//    	var prefix = 'p';
-//    	//var booksResult = [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}];
-//    	var searchDeferred = $q.defer();
-//    	
-//    	$scope.prefix=prefix;
-//    	searchResult.result = searchDeferred.promise;
-//
-//    	// when
-//    	$scope.search();
-//    	searchDeferred.resolve({data: [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}]});
-//    	$scope.$digest();
-//    	// then
-//    	expect(bookService.search).toHaveBeenCalledWith(prefix);
-//    	expect($scope.books.length).toBe(2);
-//    }));
     it('search book should call bookService.search', inject(function ($controller, $q, bookService) {
-    	 // given
-    	//spyOn(bookService, 'search').and.returnValue({then: angular.noop});
-        $controller('BookSearchController', {$scope: $scope});
+    	// given
+    	var searchDeferred = $q.defer();
+    	var searchSpyCount = 0;
+    	spyOn(bookService, 'search').and.callFake(function () {
+    		searchSpyCount = searchSpyCount + 1;
+    		if (searchSpyCount === 1) {
+    			return {then: angular.noop};
+    		}
+    		else if (searchSpyCount === 2) {
+    			return searchDeferred.promise;
+    		}
+    	});
+    	
+    	$controller('BookSearchController', {$scope: $scope});
+    	
+    	var prefix = 'p';
+    	$scope.prefix=prefix;
 
-        var prefix = 'p';
-        $scope.prefix=prefix;
-        var booksResult = [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}];
-        var searchDeferred = $q.defer();
-        spyOn(bookService, 'search').and.returnValue(searchDeferred.promise);
-        
-        // when
+    	// when
     	$scope.search();
-    	searchDeferred.resolve({data: booksResult});
-//    	searchDeferred.resolve({data: [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}]});
+    	searchDeferred.resolve({data: [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}]});
     	$scope.$digest();
-        // then
+    	// then
     	expect(bookService.search).toHaveBeenCalledWith(prefix);
     	expect($scope.books.length).toBe(2);
-    	expect($scope.books[0].id).toBe('1');
-    	expect($scope.books[1].title).toBe('ptest2');
-    	
+    }));
+//    it('search book should call bookService.search', inject(function ($controller, $q, bookService) {
+//    	 // given
+//    	//spyOn(bookService, 'search').and.returnValue({then: angular.noop});
+//        $controller('BookSearchController', {$scope: $scope});
+//
+//        var prefix = 'p';
+//        $scope.prefix=prefix;
+//        var booksResult = [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}];
+//        var searchDeferred = $q.defer();
+//        spyOn(bookService, 'search').and.returnValue(searchDeferred.promise);
+//        
+//        // when
+//    	$scope.search();
+//    	searchDeferred.resolve({data: booksResult});
+////    	searchDeferred.resolve({data: [{id: '1', title: 'ptest'},{id: '2', title: 'ptest2'}]});
+//    	$scope.$digest();
+//        // then
+//    	expect(bookService.search).toHaveBeenCalledWith(prefix);
+//    	expect($scope.books.length).toBe(2);
+//    	expect($scope.books[0].id).toBe('1');
+//    	expect($scope.books[1].title).toBe('ptest2');
+//    	
+//    }));
+    
+    
+    it('editModal should edit title in book', inject(function ($controller, $q, bookService, Flash,$modal) {
+        // given
+    	spyOn(bookService, 'search').and.returnValue({then: angular.noop});
+        $controller('BookSearchController', {$scope: $scope});
+        var book= {id: '1', title: 'ptest'};
+        var newTitle='new';
+        var saveBookDeferred = $q.defer();
+        spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+        spyOn($modal, 'open').and.returnValue(fakeModal); 
+        spyOn(Flash, 'create');
+        // when
+        $scope.editModal(book);
+        fakeModal.close(newTitle);
+        saveBookDeferred.resolve();
+        $scope.$digest();
+        // then
+        expect(bookService.newBook).toHaveBeenCalledWith(book);
+        expect(Flash.create).toHaveBeenCalledWith('success', 'Książka została edytowana.', 'custom-class');
+        expect(book.title).toBe('new');
     }));
     
+    it('editModal should show flash for promise reject', inject(function ($controller, $q, bookService, Flash,$modal) {
+    	// given
+    	spyOn(bookService, 'search').and.returnValue({then: angular.noop});
+    	$controller('BookSearchController', {$scope: $scope});
+    	var book= {id: '1', title: 'ptest'};
+    	var newTitle='new';
+    	var saveBookDeferred = $q.defer();
+    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn($modal, 'open').and.returnValue(fakeModal); 
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.editModal(book);
+    	fakeModal.close(newTitle);
+    	saveBookDeferred.reject();
+    	$scope.$digest();
+    	// then
+    	expect(bookService.newBook).toHaveBeenCalledWith(book);
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Wyjątek edycja', 'custom-class');
+    }));
+
     
-//    it('editModal should edit title in book', inject(function ($controller, $q, bookService, Flash,$modal) {
-//        // given
-//        $controller('BookSearchController', {$scope: $scope,$modal: fakeModal});
-//        
-//        var book= {id: '1', title: 'ptest'};
-//        //$scope.book={ title: 'test',authors : entryAuthors};
-//        
-//        var editDeferred = $q.defer();
-//        spyOn('BookSearchController', 'editModal').and.returnValue(editDeferred.promise);
-//        spyOn($modal, 'open').and.returnValue(fakeModal); 
-//        spyOn(Flash, 'create');
-//        // when
-//        $scope.editModal(book);
-//       // $scope.open(); // Open the modal
-//        $scope.modalInstance.close('item1');
-//        //expect(scope.selected).toEqual('item1');
-//        
-//        editDeferred.resolve();
-//        $scope.$digest();
-//        // then
-//        expect(bookService.newBook).toHaveBeenCalledWith(book);
-//        expect(Flash.create).toHaveBeenCalledWith('success', 'Książka została edytowana.', 'custom-class');
-//        expect(book.title).toBe('item1');
-//    }));
-//    
-//    it('should cancel the dialog when dismiss is called, and  $scope.canceled should be true', function () {
-//    	// given
-//        $controller('BookSearchController', {$scope: $scope,$modal: fakeModal});
-//    	
-//    	expect( scope.canceled ).toBeUndefined();
-//
-//        fakeModal.dismiss( 'cancel' ); //Call dismiss (simulating clicking the cancel button on the modal)
-//        expect( scope.canceled ).toBe( true );
-//    });
     
+
     
     
     
