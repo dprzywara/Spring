@@ -1,4 +1,4 @@
-angular.module('app.books').controller('BookModalController',function($scope, $modalInstance, Flash) {
+angular.module('app.books').controller('BookAddAuthorModalController',function($scope, $modalInstance, Flash) {
 'use strict';
 
 					$scope.author = {
@@ -8,15 +8,30 @@ angular.module('app.books').controller('BookModalController',function($scope, $m
 			
 
 					$scope.ok = function() {
-						if($scope.AddAuthorForm.$invalid===true){
-							Flash.create('danger','imie i nazwisko jest wymagane','custom-class');
+						if($scope.AddAuthorForm.$valid===true ){
+							if($scope.author.firstName.length < 50 && $scope.author.lastName.length < 50) {
+							$modalInstance.close($scope.author);}
+						else{
+							Flash.create('danger','Imie i Nazwisko nie moze być dłuższe niż 50 znaków ','custom-class');
+								}
+						}
+						else{
+							
+							if($scope.author.lastName===undefined && $scope.author.firstName===undefined){
+								Flash.create('danger','Imie i Nazwisko sa wymagane','custom-class');
+							}
+							else{
+								if ($scope.author.firstName===undefined ){
+									Flash.create('danger','Imie jest wymagane','custom-class');
+								}
+								else {
+									Flash.create('danger','Nazwisko jest wymagane','custom-class');
+								}
+							}
+
 						}
 						
-						if ($scope.author.firstName.length > 50 || $scope.author.lastName.length > 50) {
-							Flash.create('danger','imie i nazwisko nie moze być dłuższe niż 50 znaków ','custom-class');
-						} else {
-							$modalInstance.close($scope.author);
-						}
+						
 					};
 
 					$scope.cancel = function() {

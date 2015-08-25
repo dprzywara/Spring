@@ -18,10 +18,25 @@ describe('editmodal controller', function() {
 	beforeEach(inject(function($rootScope) {
 		$scope = $rootScope.$new();
 	}));
+	
+    it('ok is defined', inject(function ($controller) {
+        // when
+        $controller('BookEditModalController', {$scope: $scope});
+        // then
+        expect($scope.ok).toBeDefined();
+    }));
+    
+    it('cancel is defined', inject(function ($controller) {
+        // when
+        $controller('BookEditModalController', {$scope: $scope});
+        // then
+        expect($scope.cancel).toBeDefined();
+    }));
+    
 
 	it('should call dismiss with cancel argument ', inject(function($controller) {
 		// given
-		$controller('EditBookModalController', {
+		$controller('BookEditModalController', {
 			$scope : $scope
 		});
 		// when
@@ -32,7 +47,7 @@ describe('editmodal controller', function() {
 	}));
 	it('should call close with scope.title in ok function', inject(function($controller) {
 		// given
-		$controller('EditBookModalController', {
+		$controller('BookEditModalController', {
 			$scope : $scope
 		});
 		$scope.title='tit';

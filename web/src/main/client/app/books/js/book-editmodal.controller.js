@@ -1,4 +1,4 @@
-angular.module('app.books').controller('EditBookModalController', function ($scope,$modalInstance) {
+angular.module('app.books').controller('BookEditModalController', function ($scope,$modalInstance) {
     'use strict';
 
     $scope.ok = function () {

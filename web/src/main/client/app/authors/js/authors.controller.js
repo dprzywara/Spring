@@ -13,7 +13,7 @@ angular.module('app.authors').controller('AuthorsController', function ($scope, 
        });
    };
 
-  // $scope.get();
+   $scope.get();
    
   
    $scope.startsWith = function (actual, expected) {

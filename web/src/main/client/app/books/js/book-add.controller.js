@@ -11,8 +11,8 @@ angular.module('app.books').controller(
 
 			$scope.addAuthor = function() {
 				var modalInstance = $modal.open({
-					templateUrl : 'books/html/book-modal.html',
-					controller : 'BookModalController',
+					templateUrl : 'books/html/addAuthor-modal.html',
+					controller : 'BookAddAuthorModalController',
 					size : 'sm'
 
 				});
@@ -30,27 +30,26 @@ angular.module('app.books').controller(
 
 			$scope.saveBook = function(book) {
 				
-				if($scope.AddBookForm.$invalid===true){
-					if($scope.book.title===''){
-						Flash.create('danger', 'Książka musi mieć tytuł.',
-						'custom-class');	
-					}
-					if($scope.book.authors.lenth===0){
-					Flash.create('danger', 'Książka musi mieć co najmniej jednego autora.',
-					'custom-class');
-					}
+				if(($scope.AddBookForm.$valid===true) && ($scope.book.authors.length>0)){
+					
+					bookService.save(book).then(
+							function() {
+								Flash.create('success', 'Książka została dodana.',
+										'custom-class');
+								$location.url('/books/book-list');
+							}, function() {
+								Flash.create('danger', 'Wyjątek-dodawanie ksiazki', 'custom-class');
+							});
 				}
 				else{
-					
 				
-				bookService.newBook(book).then(
-						function() {
-							Flash.create('success', 'Książka została dodana.',
-									'custom-class');
-							$location.url('/books/book-list');
-						}, function() {
-							Flash.create('danger', 'Wyjątek-dodawanie ksiazki', 'custom-class');
-						});
+				if($scope.book.title===undefined){
+					Flash.create('danger', 'Książka musi mieć tytuł.',
+							'custom-class');}
+					else{
+				Flash.create('danger', 'Książka musi mieć co najmniej jednego autora.',
+				'custom-class');
+				}
 				}
 			};
 			

@@ -4,39 +4,37 @@
 
 <body>
 
-<br>
+	<br>
 	<section>
-	  <form name="AddBookForm" novalidate >
-		<div flash-message="5000"></div>
-		<label>tutuł: </label>
-		<input type="text" ng-model="book.title" ng-required = "true">
-		<input type="hidden" ng-model="book.authors" id="authors">
-<!-- 		<button class="btn btn-primary btn-sm" ng-click="saveBook(book)" ng-disabled="book.authors.length==0">SaveBook</button> -->
-		<button class="btn btn-primary btn-sm" type="submit" ng-click="saveBook(book)" >SaveBook</button>
-		<p><b>Authors</b></p>
-		 <table>
-        <tr>
-       
-            <th>Imię</th>
-            <th>Nazwisko</th>
-            <th>Usuń</th>
-            
-        </tr>
-        <tr ng-repeat="author in book.authors">
-            <td>{{ author.firstName }}</td>
-            <td>{{ author.lastName}}</td>
-            <td>
-                <button ng-click="deleteAuthor(author)">Usuń</button>
-            </td>
-            
-        </tr>
-        
-    </table>
-   
-<br>
-<button class="btn btn-primary btn-sm" ng-click="addAuthor()">AddAuthor</button>
-		
-</form>
+		<form name="AddBookForm" novalidate class="form-inline">
+			<div flash-message="5000"></div>
+			<label>Tutuł: </label> 
+			<input type="text" class="form-control input-sm" placeholder="title" ng-model="book.title" ng-required="true">
+			 <input type="hidden" ng-model="book.authors" id="authors">
+			<button class="btn btn-primary btn-sm" ng-click="saveBook(book)">SaveBook</button>
+			</form>
+			<p>
+				<b>Authors</b>
+			</p>
+			<table>
+				<tr>
+					<th>Imię</th>
+					<th>Nazwisko</th>
+					<th>Usuń</th>
+				</tr>
+				<tr
+					ng-repeat="author in book.authors|orderBy:sortKey:reverse|filter:search">
+					<td>{{ author.firstName }}</td>
+					<td>{{ author.lastName}}</td>
+					<td>
+						<button class="btn btn-warning btn-sm" ng-click="deleteAuthor(author)">Usuń</button>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<button class="btn btn-primary btn-sm" ng-click="addAuthor()">AddAuthor</button>
+
+		</form>
 	</section>
 
 

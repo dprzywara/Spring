@@ -1,0 +1,22 @@
+<div>
+	<form name="AddAuthorForm" novalidate id="authorForm">
+		<div class="modal-header">
+			<h3 class="modal-title">Dodaj Autora:</h3>
+		</div>
+		<div class="modal-body">
+			<section>
+				<div flash-message="5000"></div>
+				<label>Podaj imię:</label> 
+				<input type="text" placeholder="Imie" id="firstName" name="firstName" class="form-control" data-ng-model="author.firstName" data-ng-required="true"> 
+				<label>Podaj nazwisko:</label> 
+				<input type="text" placeholder="Nazwisko" name="lastName" class="form-control" data-ng-model="author.lastName" data-ng-required="true"> <br> <br>
+			</section>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success" type="submit" ng-click="ok()">Save
+				Author</button>
+		</div>
+	</form>
+</div>
+
+

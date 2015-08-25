@@ -11,7 +11,20 @@ describe('authors controller', function () {
     beforeEach(inject(function ($rootScope) {
         $scope = $rootScope.$new();
     }));
-
+    var getDeferred;
+    var init=inject(function($q,authorsService){
+    	getDeferred = $q.defer();
+    	var getSpyCount = 0;
+    	spyOn(authorsService, 'get').and.callFake(function () {
+    		getSpyCount = getSpyCount + 1;
+    		if (getSpyCount === 1) {
+    			return {then: angular.noop};
+    		}
+    		else if (getSpyCount === 2) {
+    			return getDeferred.promise;
+    		}
+    	});
+    });
     
     it('get is defined', inject(function ($controller) {
         // when
@@ -29,14 +42,11 @@ describe('authors controller', function () {
     }));
     
     
-    //zeby dzialal test get w controlerze musi byc zakomentowane
     it('get should call bookService.get', inject(function ($controller, $q, authorsService) {
         // given
+    	init();
         $controller('AuthorsController', {$scope: $scope});
-
         var authorsResult = [{firstName: 'name1', lastname: 'aaa'},{firstName: 'name2', lastName: 'aaa2'}];
-        var getDeferred = $q.defer();
-        spyOn(authorsService, 'get').and.returnValue(getDeferred.promise);
         // when
     	$scope.get();
     	getDeferred.resolve({data: authorsResult});
@@ -52,10 +62,8 @@ describe('authors controller', function () {
     
     it('get should return Flash danger for promise reject in bookService.get', inject(function ($controller, $q, authorsService,Flash) {
     	// given
+    	init();
     	$controller('AuthorsController', {$scope: $scope});
-    	
-    	var getDeferred = $q.defer();
-    	spyOn(authorsService, 'get').and.returnValue(getDeferred.promise);
     	spyOn(Flash, 'create');
     	// when
     	$scope.get();
@@ -67,8 +75,9 @@ describe('authors controller', function () {
 
 
 
-    it('startWith should return true', inject(function ($controller) {
+    it('startWith should return true', inject(function ($controller,authorsService) {
     	// given
+    	spyOn(authorsService, 'get').and.returnValue({then: angular.noop});
     	$controller('AuthorsController', {$scope: $scope});
     	var actual='Pierwszy';
     	var expected='p';

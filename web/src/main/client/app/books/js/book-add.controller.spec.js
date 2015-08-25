@@ -83,77 +83,77 @@ describe('book controller', function () {
     	// given
     	$controller('BookAddController', {$scope: $scope});
     	var entryAuthors= [{firstName: 'first', lastName: 'last'}];
-    	$scope.book={ title: '',authors : entryAuthors};
+    	$scope.book={ title: undefined,authors : entryAuthors};
     	$scope.AddBookForm = {
-    			$invalid: true
+    			$valid: false
     	};
     	var saveBookDeferred = $q.defer();
-    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
     	spyOn(Flash, 'create');
     	// when
     	$scope.saveBook($scope.book);
     	saveBookDeferred.resolve();
     	$scope.$digest();
     	// then
-    	expect(bookService.newBook).not.toHaveBeenCalled();
+    	expect(bookService.save).not.toHaveBeenCalled();
     	expect(Flash.create).toHaveBeenCalledWith('danger', 'Książka musi mieć tytuł.', 'custom-class');
     }));
-    it('save book should return flash with warning to add authors', inject(function ($controller, $q, bookService, Flash) {
+    it('save book should return danger flash  to add authors', inject(function ($controller, $q, bookService, Flash) {
     	// given
     	$controller('BookAddController', {$scope: $scope});
     	$scope.book={ title: 'tere',authors : []};
     	$scope.AddBookForm = {
-    			$invalid: true
+    			$valid: true
     	};
     	var saveBookDeferred = $q.defer();
-    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
     	spyOn(Flash, 'create');
     	// when
     	$scope.saveBook($scope.book);
     	saveBookDeferred.resolve();
     	$scope.$digest();
     	// then
-    	expect(bookService.newBook).not.toHaveBeenCalledWith($scope.book);
-    	expect(Flash.create).not.toHaveBeenCalledWith('danger', 'Książka musi mieć co najmniej jednego autora.', 'custom-class');
+    	expect(bookService.save).not.toHaveBeenCalledWith($scope.book);
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Książka musi mieć co najmniej jednego autora.', 'custom-class');
     }));
     
-    it('save book should call bookService.newBook', inject(function ($controller, $q, bookService, Flash) {
+    it('save book should call bookService.save', inject(function ($controller, $q, bookService, Flash) {
         // given
         $controller('BookAddController', {$scope: $scope});
         var entryAuthors= [{firstName: 'first', lastName: 'last'}];
         $scope.book={ title: 'test',authors : entryAuthors};
         $scope.AddBookForm = {
-				  $invalid: false
+				  $valid: true
 				};
         var saveBookDeferred = $q.defer();
-        spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+        spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
         spyOn(Flash, 'create');
         // when
         $scope.saveBook($scope.book);
         saveBookDeferred.resolve();
         $scope.$digest();
         // then
-        expect(bookService.newBook).toHaveBeenCalledWith($scope.book);
+        expect(bookService.save).toHaveBeenCalledWith($scope.book);
         expect(Flash.create).toHaveBeenCalledWith('success', 'Książka została dodana.', 'custom-class');
         expect($scope.book.title).toBe('test');
     }));
-    it('save book should call bookService.newBook and return danger allert for promise reject', inject(function ($controller, $q, bookService, Flash) {
+    it('save book should call bookService.save and return danger allert for promise reject', inject(function ($controller, $q, bookService, Flash) {
     	// given
     	$controller('BookAddController', {$scope: $scope});
     	var entryAuthors= [{firstName: 'first', lastName: 'last'}];
     	$scope.book={ title: 'test',authors : entryAuthors};
     	$scope.AddBookForm = {
-    			$invalid: false
+    			$valid: true
     	};
     	var saveBookDeferred = $q.defer();
-    	spyOn(bookService, 'newBook').and.returnValue(saveBookDeferred.promise);
+    	spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
     	spyOn(Flash, 'create');
     	// when
     	$scope.saveBook($scope.book);
     	saveBookDeferred.reject();
     	$scope.$digest();
     	// then
-    	expect(bookService.newBook).toHaveBeenCalledWith($scope.book);
+    	expect(bookService.save).toHaveBeenCalledWith($scope.book);
     	expect(Flash.create).toHaveBeenCalledWith('danger', 'Wyjątek-dodawanie ksiazki', 'custom-class');
     }));
     

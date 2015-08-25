@@ -18,6 +18,10 @@ describe('Authors rest service', function () {
         httpBackend = $httpBackend;
     }));
     
+    it('get is defined', inject(function (authorsRestService) {
+        // then
+        expect(authorsRestService.get).toBeDefined();
+    }));
     
     
     it('should get all authors', inject(function (authorsRestService) {
@@ -26,10 +30,12 @@ describe('Authors rest service', function () {
         var httpResponse = [{firstName: 'first1', lastName: 'last1'}, {firstName: 'first2', lastName: 'last2'}];
         httpBackend.expectGET(url).respond(200, httpResponse);
         // when
-        var promise=authorsRestService.get();
+        var promise=authorsRestService.get().then(function(response) {
+                    expect(response.status).toEqual(200);
+                    expect(response.data).toEqual(httpResponse);
+        });
         httpBackend.flush();
         // then
-        //expect($scope.authors.length).toBe(2);
         expect(promise.then).toBeDefined();
     } ));
     

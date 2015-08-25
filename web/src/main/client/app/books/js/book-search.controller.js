@@ -4,6 +4,7 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
     $scope.books = [];
     $scope.gridOptions = { data: 'books' };
     $scope.prefix = '';
+    
 
     var removeBookById = function (bookId) {
         for (var i = 0; i < $scope.books.length; i = i + 1) {
@@ -34,14 +35,14 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
     $scope.editModal = function(book) {
 		var modalInstance = $modal.open({
 			templateUrl : 'books/html/edit-modal.html',
-			controller : 'EditBookModalController',
+			controller : 'BookEditModalController',
 			size : 'sm'
 
 		});
 		
 		modalInstance.result.then(function(title) {
 			book.title=title;
-			bookService.newBook(book).then(
+			bookService.save(book).then(
 					function() {
 						Flash.create('success', 'Książka została edytowana.',
 								'custom-class');
