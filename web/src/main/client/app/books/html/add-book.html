@@ -23,7 +23,7 @@
 					<th>Usuń</th>
 				</tr>
 				<tr
-					ng-repeat="author in book.authors|orderBy:sortKey:reverse|filter:search">
+					ng-repeat="author in book.authors">
 					<td>{{ author.firstName }}</td>
 					<td>{{ author.lastName}}</td>
 					<td>

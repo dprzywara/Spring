@@ -50,12 +50,12 @@ describe('Books rest service', function () {
     
     it('should delete book', inject(function (bookRestService) {
     	// given
-    	
-    	var url = '/context.html/rest/books/book/';
+    	var bookId=1;
+    	var url = '/context.html/rest/books/book/'+bookId;
     	var httpResponse = [];
     	httpBackend.expectDELETE(url).respond(200, httpResponse);
     	// when
-    	var promise=bookRestService.deleteBook('').then(function(response) {
+    	var promise=bookRestService.deleteBook(bookId).then(function(response) {
     		        expect(response.status).toEqual(200);
     		        expect(response.data).toEqual(httpResponse);
     	});
@@ -67,12 +67,12 @@ describe('Books rest service', function () {
     
     it('should save book', inject(function (bookRestService) {
     	// given
-
+    	var book={id:'1',title:'trte'};
         var url = '/context.html/rest/books/book/';
-        var httpResponse = {id:'1', title: 'first1'};
-        httpBackend.expectPOST(url).respond(200, httpResponse);
+        var httpResponse = {id:'1',title:'trte'};
+        httpBackend.expectPOST(url,book).respond(200, httpResponse);
         // when
-        var promise=bookRestService.save().then(function(response) {
+        var promise=bookRestService.save(book).then(function(response) {
                     expect(response.status).toEqual(200);
                     expect(response.data).toEqual(httpResponse);
         });

@@ -1,8 +1,14 @@
-angular.module('app.books').controller('BookEditModalController', function ($scope,$modalInstance) {
+angular.module('app.books').controller('BookEditModalController', function ($scope,$modalInstance,Flash) {
     'use strict';
 
     $scope.ok = function () {
-      $modalInstance.close($scope.title);
+    	if($scope.EditForm.$valid===true ){
+    		$modalInstance.close($scope.title);
+			}
+		else{
+			Flash.create('danger','Tytul jest wymagany','custom-class');
+				}
+      
     };
 
     $scope.cancel = function () {

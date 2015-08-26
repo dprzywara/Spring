@@ -75,7 +75,7 @@ describe('authors controller', function () {
 
 
 
-    it('startWith should return true', inject(function ($controller,authorsService) {
+    it('startWith should return true for firstName', inject(function ($controller,authorsService) {
     	// given
     	spyOn(authorsService, 'get').and.returnValue({then: angular.noop});
     	$controller('AuthorsController', {$scope: $scope});
@@ -87,6 +87,5 @@ describe('authors controller', function () {
     	// then
     	expect(result).toEqual(true);
     }));
-    
 
 });

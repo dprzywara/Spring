@@ -21,6 +21,10 @@ angular.module('app.authors').controller('AuthorsController', function ($scope, 
 	    return lowerStr.indexOf(expected.toLowerCase()) === 0;
 	};
    
+	
+	
+	
+	
    Object.defineProperty($scope, 'queryFilter', {
 	      get: function() {
 	          var out = {};

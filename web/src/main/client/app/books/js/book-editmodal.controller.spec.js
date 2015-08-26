@@ -42,7 +42,6 @@ describe('editmodal controller', function() {
 		// when
 		$scope.cancel();
 		// then
-		expect($scope.cancel).toBeDefined();
 		expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
 	}));
 	it('should call close with scope.title in ok function', inject(function($controller) {
@@ -50,12 +49,31 @@ describe('editmodal controller', function() {
 		$controller('BookEditModalController', {
 			$scope : $scope
 		});
+		$scope.EditForm = {
+				$valid: true
+		};
 		$scope.title='tit';
 		// when
 		$scope.ok();
 		// then
-	    expect($scope.ok).toBeDefined();
 		expect(modalInstance.close).toHaveBeenCalledWith('tit');
+	}));
+	it('should return danger alert for invalid form in ok function', inject(function($controller,Flash) {
+		// given
+		$controller('BookEditModalController', {
+			$scope : $scope
+		});
+		
+		$scope.EditForm = {
+				$valid: false
+		};
+		spyOn(Flash, 'create');
+		$scope.title='';
+		// when
+		$scope.ok();
+		// then
+		expect(Flash.create).toHaveBeenCalledWith('danger','Tytul jest wymagany', 'custom-class');
+		expect(modalInstance.close).not.toHaveBeenCalled();
 	}));
 
 
