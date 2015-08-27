@@ -25,6 +25,7 @@
 				<th>Nazwisko</th>
 			</tr>
 			<tr ng-repeat="author in authors | filter:queryFilter:startsWith">
+<!-- 		<tr ng-repeat="author in authors | filter:queryFilter:strict"> -->
 				<td>{{ author.id }}</td>
 				<td>{{ author.firstName }}</td>
 				<td>{{ author.lastName }}</td>

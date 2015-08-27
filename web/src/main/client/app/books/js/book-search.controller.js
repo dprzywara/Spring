@@ -51,6 +51,7 @@ angular.module('app.books').controller('BookSearchController', function ($scope,
 						Flash.create('danger', 'Wyjątek edycja', 'custom-class');
 					});
 		}, function() {
+			Flash.create('danger', 'Modal dismissed', 'custom-class');
 			$log.info('Modal dismissed at: ' + new Date());
 		});
 		

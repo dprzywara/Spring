@@ -6,24 +6,7 @@ describe('book controller', function () {
         module('flash');
         module('app.books');
     });
-    
-    
-    
-    var fakeModal = {
-    	    result: {
-    	        then: function (confirmCallback, cancelCallback) {
-    	            this.confirmCallBack = confirmCallback;
-    	            this.cancelCallback = cancelCallback;
-    	            return this;
-    	        }
-    	    },
-    	    close: function (item) {
-    	        this.result.confirmCallBack(item);
-    	    },
-    	    dismiss: function (item) {
-    	        this.result.cancelCallback(item);
-    	    }
-    	};
+
 
     var $scope;
     beforeEach(inject(function ($rootScope) {
@@ -150,12 +133,13 @@ describe('book controller', function () {
         var book= {id: '1', title: 'ptest'};
         var newTitle='new';
         var saveBookDeferred = $q.defer();
+        var ModalDeferred = $q.defer();
         spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
-        spyOn($modal, 'open').and.returnValue(fakeModal); 
+        spyOn($modal, 'open').and.returnValue({result:ModalDeferred.promise}); 
         spyOn(Flash, 'create');
         // when
         $scope.editModal(book);
-        fakeModal.close(newTitle);
+        ModalDeferred.resolve(newTitle);
         saveBookDeferred.resolve();
         $scope.$digest();
         // then
@@ -164,6 +148,9 @@ describe('book controller', function () {
         expect(book.title).toBe('new');
     }));
     
+    
+
+    
     it('editModal should show flash for promise reject', inject(function ($controller, $q, bookService, Flash,$modal) {
     	// given
     	spyOn(bookService, 'search').and.returnValue({then: angular.noop});
@@ -171,21 +158,50 @@ describe('book controller', function () {
     	var book= {id: '1', title: 'ptest'};
     	var newTitle='new';
     	var saveBookDeferred = $q.defer();
+    	var ModalDeferred = $q.defer();
     	spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
-    	spyOn($modal, 'open').and.returnValue(fakeModal); 
+    	spyOn($modal, 'open').and.returnValue({result:ModalDeferred.promise}); 
     	spyOn(Flash, 'create');
     	// when
     	$scope.editModal(book);
-    	fakeModal.close(newTitle);
+    	ModalDeferred.resolve(newTitle);
     	saveBookDeferred.reject();
     	$scope.$digest();
     	// then
     	expect(bookService.save).toHaveBeenCalledWith(book);
     	expect(Flash.create).toHaveBeenCalledWith('danger', 'Wyjątek edycja', 'custom-class');
     }));
+    
+    it('editModal should show danger flash for modal dismiss', inject(function ($controller, $q, bookService, Flash,$modal) {
+    	// given
+    	spyOn(bookService, 'search').and.returnValue({then: angular.noop});
+    	$controller('BookSearchController', {$scope: $scope});
+    	var book= {id: '1', title: 'ptest'};
+    	var saveBookDeferred = $q.defer();
+    	var ModalDeferred = $q.defer();
+    	spyOn(bookService, 'save').and.returnValue(saveBookDeferred.promise);
+    	spyOn($modal, 'open').and.returnValue({result:ModalDeferred.promise}); 
+    	spyOn(Flash, 'create');
+    	// when
+    	$scope.editModal(book);
+    	ModalDeferred.reject();
+    	saveBookDeferred.resolve();
+    	$scope.$digest();
+    	// then
+    	expect(bookService.save).not.toHaveBeenCalledWith(book);
+    	expect(Flash.create).toHaveBeenCalledWith('danger', 'Modal dismissed', 'custom-class');
+    }));
 
     
-    
+    it('addBook should call $location.url', inject(function ($controller, $location) {
+    	// given   	
+    	$controller('BookSearchController', {$scope: $scope});
+    	spyOn($location, 'url');
+    	// when
+    	$scope.addBook();
+    	// then
+    	expect($location.url).toHaveBeenCalledWith('/books/add-book');
+    }));
 
     
     
